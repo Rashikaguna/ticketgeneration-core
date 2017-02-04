@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.rashika.exception.PersistanceException;
 import com.rashika.model.Department;
 import com.rashika.util.ConnectionUtil;
 
@@ -13,13 +15,17 @@ public class DepartmentDAO {
 
 JdbcTemplate jdbcTemplate= ConnectionUtil.getJdbcTemplate();
 	
-	public void save(Department department )
-	{
-		String sql="INSERT INTO DEPARTMENT(DEPARTMENT) VALUES(?)";
-		Object[] params={department.getDepartment()};
-		int rows= jdbcTemplate.update(sql, params);
-		System.out.println("No. of rows:" +rows);
+public void save(Department department) throws PersistanceException {
+	try {
+		String sql = "INSERT INTO DEPARTMENT(NAME)VALUES(?)";
+		Object[] params = { department.getDepartment() };
+		jdbcTemplate.update(sql, params);
+	} catch (DuplicateKeyException e) {
+		throw new PersistanceException("Given department already exists", e);
 	}
+
+}
+
 	public void update(Department department) {
 
 		String sql = "UPDATE DEPARTMENT SET DEPARTMENT=? WHERE ID=?";
@@ -38,10 +44,10 @@ JdbcTemplate jdbcTemplate= ConnectionUtil.getJdbcTemplate();
 
 	}
 	
-	public Department convertForMenu(final ResultSet rs) throws SQLException {
+	public Department convert(final ResultSet rs) throws SQLException {
 		final Department department = new Department();
 department.setId(rs.getInt("ID"));
-department.setDepartment(rs.getString("DEPARTMENT"));
+department.setDepartment(rs.getString("NAME"));
 department.setActive(rs.getBoolean("ISACTIVE"));
 return department;
 	}
@@ -49,9 +55,30 @@ return department;
 	public List<Department> listdept() {
 		String sql = "SELECT * FROM DEPARTMENT";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
-			final Department department= convertForMenu(rs);
+			final Department department= convert(rs);
 			return department;
 		});
 	}
 	
+	
+	public Department findId(String department) {
+		String sql = "SELECT ID FROM DEPARTMENT WHERE NAME = ?";
+		Object[] params = { department };
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) ->{ 
+			Department departments = new Department();
+			departments.setId(rs.getInt("ID"));
+			return departments;
+		
+		});
+
+	
+	}
+	
+	public int findno(String dept){
+		String sql="SELECT ID FROM DEPARTMENT WHERE NAME=?";
+		Object[] params = {dept};
+	return jdbcTemplate.queryForObject(sql, params, Integer.class);
+	
+	
+	}
 }

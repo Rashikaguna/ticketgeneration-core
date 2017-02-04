@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.rashika.model.TicketIssue;
 import com.rashika.model.UserInformation;
 import com.rashika.util.ConnectionUtil;
 
@@ -43,12 +44,12 @@ public class UserInformationDAO {
 	public List<UserInformation> listuserinformation() {
 		String sql = "SELECT ID,NAME,EMAILID,PASSWORD,ISACTIVE FROM USER_INFORMATION";
 		return jdbcTemplate.query(sql, (rs, rowNum) -> {
-			final UserInformation userInformation= convertForMenu(rs);
+			final UserInformation userInformation= convert(rs);
 			return userInformation;
 		});
 	}
 	
-	public UserInformation convertForMenu(final ResultSet rs) throws SQLException {
+	public UserInformation convert(final ResultSet rs) throws SQLException {
 		final UserInformation userInformation = new UserInformation();
 userInformation.setId(rs.getInt("id"));
 userInformation.setName(rs.getString("name"));
@@ -58,4 +59,37 @@ userInformation.setActive(rs.getBoolean("isActive"));
 return userInformation;
 	}
 	
+	public UserInformation findOne(String emailId) {
+		String sql="SELECT PASSWORD FROM USER_INFORMATION WHERE EMAILID=?";
+		Object[] params={emailId};
+		return jdbcTemplate.queryForObject(sql, params,(rs,rowNo) -> {
+			UserInformation userInformation=new UserInformation();
+			userInformation.setPassword(rs.getString("PASSWORD"));
+			return userInformation;
+			
+		});
+		}
+	public UserInformation findId(String emailId) {
+		String sql = "SELECT ID FROM USER_INFORMATION WHERE EMAILID=?";
+		Object[] params = { emailId };
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+			UserInformation userInformation=new UserInformation();
+			userInformation.setId(rs.getInt("ID"));
+			return userInformation;
+		
+		});
+
+	}
+
+
+
 }
+
+
+
+
+
+
+	
+	
+
