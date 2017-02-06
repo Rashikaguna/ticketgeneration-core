@@ -13,9 +13,9 @@ public class TestTicketIssueDAO {
 //ticketIssue.setId(11);
 //		ticketIssueDAO.updateClose(ticketIssue);
 		
-		System.out.println(ticketIssueDAO.getStatus(11));
+		//System.out.println(ticketIssueDAO.getStatus(11));
 		
-		
+		System.out.println(ticketIssueDAO.findempTickets(1));
 		
 		
 //		UserInformation userInformation=new UserInformation();

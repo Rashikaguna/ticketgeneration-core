@@ -32,4 +32,14 @@ JdbcTemplate jdbcTemplate= ConnectionUtil.getJdbcTemplate();
 		System.out.println("No of rows deleted: " + rows);
 
 	}
+	
+	public Role findRoleId(Role role) {
+		String sql = "SELECT ID FROM ROLE WHERE NAME = ? AND ISACTIVE=1";
+		Object[] params = {role.getRole()};
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+			Role roles=new Role();
+			roles.setId(rs.getInt("ID"));
+			return roles;
+		});
+	}
 }

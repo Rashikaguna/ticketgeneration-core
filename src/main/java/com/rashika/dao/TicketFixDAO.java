@@ -14,8 +14,8 @@ public class TicketFixDAO  {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
 	public void save(TicketFix ticketfix) {
-		String sql = "INSERT INTO TICKET_FIXES VALUES(?,?,?)";
-		Object[] params = {ticketfix.getId(),ticketfix.getTicketId(),ticketfix.getSolution()};
+		String sql = "INSERT INTO TICKET_FIXES(EMPLOYEE_ID,TICKET_ID,SOLUTION) VALUES(?,?,?)";
+		Object[] params = {ticketfix.getEmpId(),ticketfix.getTicketId(),ticketfix.getSolution()};
 		int rows = jdbcTemplate.update(sql, params);
 		System.out.println(rows);
 	}
@@ -39,6 +39,22 @@ public class TicketFixDAO  {
 		ticketFix.setTicketId(ticketIssue);
 		ticketFix.setSolution(rs.getString("SOLUTION"));
 		return ticketFix;
+	}
+	
+	
+	public void updateEmployeeId(TicketFix ticketFix) {
+		String sql = "UPDATE TICKET_FIXES SET EMPLOYEE_ID=? WHERE TICKET_ID=?";
+		Object[] params = {ticketFix.getEmpId().getId(),ticketFix.getTicketId().getId()};
+		int rows = jdbcTemplate.update(sql, params);
+		System.out.println(rows);
+
+	} 
+	public void delete(int issueId) {
+		String sql = "DELETE FROM TICKET_FIXES WHERE TICKET_ID=?";
+		Object params = issueId;
+		int rows = jdbcTemplate.update(sql, params);
+		System.out.println(rows);
+
 	}
 
 	

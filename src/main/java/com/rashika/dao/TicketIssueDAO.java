@@ -137,5 +137,45 @@ public List<TicketIssue> findUserDetail(int userId) {
 
 }
 
+public void updateProgressStatus(TicketIssue ticketissue) {
+	String sql = "UPDATE TICKET_ISSUES SET STATUS='In Progress' WHERE ID=?";
+	Object[] params = { ticketissue.getId() };
+	int rows = jdbcTemplate.update(sql, params);
+	System.out.println(rows);
+
+}
+
+public void updateResolvedStatus(TicketIssue ticketissue) {
+	String sql = "UPDATE TICKET_ISSUES SET STATUS='Resolved',DATE_RESOLVED=NOW() WHERE ID=?";
+	Object[] params = { ticketissue.getId() };
+	int rows = jdbcTemplate.update(sql, params);
+	System.out.println(rows);
+
+}
+public void deleteticket(int id) {
+	String sql = "DELETE FROM TICKET_ISSUES WHERE ID=?";
+	Object params = id;
+	int rows = jdbcTemplate.update(sql, params);
+	System.out.println(rows);
+
+}
+
+public List<TicketIssue> findempTickets(int empId) {
+	String sql = "SELECT TICKET_ISSUES.ID,SUBJECT,DESCRIPTION,STATUS,PRIORITY FROM TICKET_ISSUES , TICKET_FIXES WHERE TICKET_ISSUES.ID=TICKET_FIXES.TICKET_ID AND  TICKET_FIXES.EMPLOYEE_ID=?";
+	Object[] params = { empId };
+	return jdbcTemplate.query(sql, params, (rs, rowNo) -> {
+		TicketIssue issue = new TicketIssue();
+
+		issue.setId(rs.getInt("ID"));
+		issue.setSubject(rs.getString("SUBJECT"));
+		issue.setDescription(rs.getString("DESCRIPTION"));
+		issue.setStatus(rs.getString("STATUS"));
+		issue.setPriority(rs.getString("PRIORITY"));
+
+		return issue;
+
+	});
+
+}
 
 }
