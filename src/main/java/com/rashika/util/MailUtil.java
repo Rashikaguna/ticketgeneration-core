@@ -15,14 +15,14 @@ public class MailUtil {
 
 	email.setSmtpPort(465);
 	
-	email.setAuthenticator(new DefaultAuthenticator("rashikaggunalan@gmail.com", "praisejesus12"));
+	email.setAuthenticator(new DefaultAuthenticator("ticketms12@gmail.com", "ticket12"));
 	email.setDebug(false);
 	email.setHostName("smtp.gmail.com");
 	email.setSSLOnConnect(true);
-	email.setFrom("rashikaggunalan@gmail.com");
-	email.setSubject("TestMail");
-	email.setMsg("This is a test mail ... :-)");
-	email.addTo("rashikaguna.com");
+	email.setFrom("ticketms12@gmail.com");
+	email.setSubject("TicketGenerated");
+	email.setMsg("Hello, a ticket has been created by a user");
+	email.addTo("reginajohn1995@gmail.com");
 	email.setStartTLSEnabled(true);
 	email.send();
 	
