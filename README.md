@@ -6,4 +6,4 @@ Working Features of ticketmanagement-core
 >Employee can view the tickets assigned to them.
 >Admin can assign empployee to a ticket
 >Admin can delete a ticket.
->Mail will be sent to admin, when aticket is created.
+>Mail will be sent to admin, when a ticket is created.
