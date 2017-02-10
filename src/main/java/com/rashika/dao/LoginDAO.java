@@ -6,8 +6,8 @@ public class LoginDAO {
 
 	UserInformationDAO userInformationDAO=new UserInformationDAO();
 	public boolean login(String emailId,String password){
-		String s=userInformationDAO.findOne(emailId).getPassword();
-		if(s.equals(password))
+		String s=userInformationDAO.find1(emailId,password).getName();
+		if(s!=null)
 			return true;
 		return false;
 	}

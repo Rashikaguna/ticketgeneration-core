@@ -8,30 +8,31 @@ public class TestCreateTicketDAO {
 
 	public static void main(String[] args) throws PersistanceException {
 
-		CreateTicketDAO createTicketdao=new CreateTicketDAO();
-		UserInformation userinformation=new UserInformation();
-	//	userinformation.setId(3);
-//		int userId=userinformation.getId();
-	//	userinformation.setName("kk");
-		userinformation.setEmailId("rashika@gmail.com");
-		userinformation.setPassword("rashika12");
-		//TicketIssueDAO ticketIssueDAO = new TicketIssueDAO();
-TicketIssue ticketIssue=new TicketIssue();
-	ticketIssue.setId(1);
-		int issueId=ticketIssue.getId();
-		
-		//String subject="system Failure";
-		String description="failure of computer";
-	//	String department="HUMAN RESOURCE";
-	//	String priority="low";
-		//createTicketdao.createTicket(userinformation.getEmailId(),userinformation.getPassword(), subject, description, department, priority);
-		//createTicketdao.updateClose(userinformation.getEmailId(),userinformation.getPassword(),issueId);
-		createTicketdao.updateTicket(userinformation.getEmailId(),userinformation.getPassword(), issueId, description);
+		CreateTicketDAO createTicketdao = new CreateTicketDAO();
+		UserInformation userinformation = new UserInformation();
+		// userinformation.setId(1);
+		// int userId=userinformation.getId();
+		// userinformation.setName("kk");
+		userinformation.setEmailId("rose@gmail.com");
+		userinformation.setPassword("rose12");
+		// TicketIssueDAO ticketIssueDAO = new TicketIssueDAO();
+		////
+//		TicketIssue ticketIssue = new TicketIssue();
+//		ticketIssue.setId(3);
+//		int issueId = ticketIssue.getId();
+		// String description="failure of .. lksn";
 
-	//createTicketdao.findUserDetails(userinformation.getEmailId(),userinformation.getPassword());
-	//	createTicketdao.registration(userinformation.getEmailId(),userinformation.getEmailId(),userinformation.getPassword());
-		
-		
+		// String subject="system Failure";
+		// String department="HUMAN RESOURCE";
+		// String priority="low";
+		// createTicketdao.createTicket(userinformation.getEmailId(),userinformation.getPassword(),
+		// subject, description, department, priority);
+		// createTicketdao.updateClose(userinformation.getEmailId(),userinformation.getPassword(),issueId);
+		// createTicketdao.updateTicket(userinformation.getEmailId(),userinformation.getPassword(),
+		// issueId, description);
+		createTicketdao.findUserDetails(userinformation.getEmailId(), userinformation.getPassword());
+		// createTicketdao.registration(userinformation.getEmailId(),userinformation.getEmailId(),userinformation.getPassword());
+
 	}
 
 }

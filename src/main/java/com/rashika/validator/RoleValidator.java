@@ -8,6 +8,6 @@ public class RoleValidator {
 
 	Validator validator=new Validator();
 	public void save(Role role) throws ValidatorException{
-		validator.isInvalid(role.getRole(), "NAME");
+		Validator.isInvalid(role.getRole(), "NAME");
 }
 }

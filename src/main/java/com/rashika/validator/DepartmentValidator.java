@@ -8,6 +8,6 @@ public class DepartmentValidator {
 
 	Validator validator=new Validator();
 	public void save(Department department) throws ValidatorException{
-		validator.isInvalid(department.getDepartment(),"DEPARTMENT");
+		Validator.isInvalid(department.getDepartment(),"DEPARTMENT");
 }
 }

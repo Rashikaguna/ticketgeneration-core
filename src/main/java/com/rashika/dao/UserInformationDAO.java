@@ -31,6 +31,16 @@ public class UserInformationDAO {
 		System.out.println("No of rows updated: " + rows);
 
 	}
+	public UserInformation find1(String emailId,String pas) {
+		String sql="SELECT NAME FROM USER_INFORMATION WHERE EMAILID=? AND PASSWORD=?";
+		Object[] params={emailId,pas};
+		return jdbcTemplate.queryForObject(sql, params,(rs,rowNo) -> {
+			UserInformation userInformation=new UserInformation();
+			userInformation.setName(rs.getString("NAME"));
+			return userInformation;
+			
+		});
+		}
 	
 	public void delete(int id) {
 

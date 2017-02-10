@@ -84,7 +84,7 @@ public TicketIssue getStatus(int id) {
 
 
 public TicketIssue findStatus(int id,int userId) {
-	String sql = "SELECT STATUS FROM TICKET_ISSUES WHERE  ID = ? AND USER_ID=?";
+	String sql = "SELECT STATUS FROM TICKET_ISSUES WHERE  ID =? AND USER_ID=?";
 	Object[] params = { id,userId };
 	return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
 	TicketIssue ticketIssue=new TicketIssue();

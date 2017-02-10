@@ -8,9 +8,9 @@ public class EmployeeValidator {
 
 	Validator validator=new Validator();
 	public void save(Employee employee) throws ValidatorException{
-		validator.isInvalid(employee.getName(), "NAME");
-		validator.isInvalid(employee.getEmailId(),"EMAILID");
-		validator.isInvalid(employee.getPassword(),"PASSWORD");
+		Validator.isInvalid(employee.getName(), "NAME");
+		Validator.isInvalid(employee.getEmailId(),"EMAILID");
+		Validator.isInvalid(employee.getPassword(),"PASSWORD");
 }
 
 }

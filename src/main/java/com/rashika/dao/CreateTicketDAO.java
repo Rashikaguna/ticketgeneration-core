@@ -62,13 +62,13 @@ public class CreateTicketDAO {
 			userinformation.setId(userId);
 			ticketIssue.setUserId(userinformation);
 			
-			if("Closed".equals(ticketIssueDAO.findStatus(userId, issueId).getStatus()) || "CLOSED".equals(ticketIssueDAO.findStatus(userId, issueId).getStatus()) ){
-		
-			System.out.println("You cant update now!");
-			}
-		else
-		{
-	
+//			if( "CLOSED".equals(ticketIssueDAO.findStatus(userId, issueId).getStatus()) ){
+//		
+//			System.out.println("You can't update now!");
+//			}
+//		else
+//		{
+//	
 			ticketIssue.setUserId(userinformation);
 		
 			ticketIssue.setId(issueId);
@@ -76,7 +76,7 @@ public class CreateTicketDAO {
 			ticketIssue.setDescription(updateDescription);
 		
 			ticketIssueDAO.updateDescription(ticketIssue);
-		}
+//		}
 	}
 		else
 		{
