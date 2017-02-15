@@ -1,8 +1,14 @@
 package com.rashika.service;
 
+import java.util.Iterator;
+import java.util.List;
+
+import com.rashika.dao.UserInformationDAO;
 import com.rashika.exception.PersistanceException;
 import com.rashika.exception.ServiceException;
 import com.rashika.exception.ValidatorException;
+import com.rashika.model.Employee;
+import com.rashika.model.TicketIssue;
 import com.rashika.model.UserInformation;
 
 public class TestTicketService {
@@ -13,15 +19,30 @@ public class TestTicketService {
 	 * @throws PersistenceException
 	 */
 	public static void main(String[] args) throws ServiceException, PersistanceException {
-		TicketService ts = new TicketService();
+		TicketService ticketService = new TicketService();
 		// CreateTicketDAO createTicket=new CreateTicketDAO();
 		UserInformation user = new UserInformation();
+		UserInformationDAO userInformationDAO=new UserInformationDAO();
 		// user.setId(3);
 		// int userId=user.getId();
 		// user.setName("rina");
-		user.setEmailId("rose@gmail.com");
-		user.setPassword("rose12");
-
+		user.setEmailId("rashika@gmail.com");
+		user.setPassword("rashika12");
+		TicketIssue ticketIssue=new TicketIssue();
+		
+		int userId=userInformationDAO.findId(user.getEmailId()).getId();
+		user.setId(userId);
+		ticketIssue.setUserId(user);
+		List<TicketIssue> l=ticketService.findUserDetails(ticketIssue);
+		Iterator i = l.iterator();
+		while (i.hasNext()) {
+			TicketIssue ticketIssue2 = (TicketIssue) i.next();
+			System.out.println(ticketIssue2.getId()+"\t"+ ticketIssue2.getUserId().getId()
+					+"\t"+ticketIssue2.getSubject()
+					+"\t"+ticketIssue2.getDescription()
+					+"\t"+ticketIssue2.getPriority()+"\t"+ticketIssue2.getStatus());
+		}
+//System.out.println(ts.findUserDetails(issue));
 //		TicketIssue issue = new TicketIssue();
 //		issue.setId(3);
 //		int issueId = issue.getId();
@@ -30,26 +51,21 @@ public class TestTicketService {
 //		String description = "asdf";
 		// String department="HUMAN RESOURCE";
 		// String priority="High";
-		// Employee employee=new Employee();
-		// employee.setEmailId("regina@gmail.com");
-		// employee.setPassword("regina12");
-		// System.out.print(ts.emplogin(employee.getEmailId(),employee.getPassword()));
-		// System.out.println(ts.login(user.getEmailId(), user.getPassword()));
-try {
-	ts.findUserDetail(user.getEmailId(), user.getPassword());
-} catch (ValidatorException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}		
+		 Employee employee=new Employee();
+		 employee.setEmailId("roshni@gmail.com");
+		 employee.setPassword("roshni12");
+		// System.out.print(ticketService.emplogin(employee.getEmailId(),employee.getPassword()));
+		// System.out.println(ticketService.login(user.getEmailId(), user.getPassword()));
+		
 // ts.registration(user.getName(),user.getEmailId(),user.getPassword());
-		// ts.createTicket(user.getEmailId(),user.getPassword(), subject,
+		// ticketService.createTicket(user.getEmailId(),user.getPassword(), subject,
 		// description, department, priority);
-//		ts.updateTicket(user.getEmailId(), user.getPassword(), issueId, description);
-//		 ts.updateClose(user.getEmailId(),user.getPassword(),issueId);
-		// ts.assignEmp(employee.getEmailId(),employee.getPassword(), issueId,
+//		ticketService.updateTicket(user.getEmailId(), user.getPassword(), issueId, description);
+//		 ticketService.updateClose(user.getEmailId(),user.getPassword(),issueId);
+		// ticketService.assignEmp(employee.getEmailId(),employee.getPassword(), issueId,
 		// 1);
-		// ts.deleteTickets(employee.getEmailId(),employee.getPassword(), 14);
-		// ts.findEmployeeTickets(employee.getEmailId(),employee.getPassword());
+//		 ticketService.deleteTickets(employee.getEmailId(),employee.getPassword(), 21);
+		 ticketService.findEmployeeTickets(employee.getEmailId(),employee.getPassword());
 	}
 
 }
