@@ -3,10 +3,13 @@ package com.rashika.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
+
 import com.rashika.exception.PersistanceException;
 import com.rashika.model.Department;
 import com.rashika.model.TicketIssue;
 import com.rashika.model.UserInformation;
+import com.rashika.util.MailUtil;
 
 public class CreateTicketDAO {
 	TicketIssue ticketIssue=new TicketIssue();
@@ -44,6 +47,12 @@ public class CreateTicketDAO {
 		ticketIssue.setDepartmentId(departments);
 		ticketIssue.setPriority(priority);
 		ticketIssueDAO.save(ticketIssue);
+		try {
+			MailUtil.sendSimpleMail();
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	else
 	{
@@ -104,6 +113,10 @@ public class CreateTicketDAO {
 			System.out.println("Incorrect user name or password");
 		}
 	}
+	public List<TicketIssue> findUserTicket(TicketIssue issue) throws PersistanceException{
+		return ticketIssueDAO.findUserTickets(issue);
+	}
+	
 	
 	public void findUserDetails(String emailId,String password) throws PersistanceException{
 		LoginDAO loginDao=new LoginDAO();
@@ -114,7 +127,7 @@ public class CreateTicketDAO {
 			
 		int userId=userinformationDao.findId(emailId).getId();
 		userinformation.setId(userId);
-		TicketIssueDAO.findUserDetails(userinformation.getId());
+		ticketIssueDAO.findUserDetails(userinformation.getId());
 		
 		List<TicketIssue> list = TicketIssueDAO.findUserDetails(userId);
 		Iterator<TicketIssue> i = list.iterator();
