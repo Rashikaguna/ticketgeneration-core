@@ -1,24 +1,27 @@
 package com.rashika.service;
 
+import java.util.List;
+
 import com.rashika.dao.AssignEmployeeDAO;
 import com.rashika.dao.CreateTicketDAO;
 import com.rashika.dao.LoginDAO;
 import com.rashika.exception.PersistanceException;
 import com.rashika.exception.ServiceException;
 import com.rashika.exception.ValidatorException;
+import com.rashika.model.TicketIssue;
 import com.rashika.validator.CreateTicketValidator;
 
 public class TicketService {
 	LoginDAO logindao = new LoginDAO();
 	AssignEmployeeDAO assignEmployeeDAO = new AssignEmployeeDAO();
 	CreateTicketValidator createTicketValidator = new CreateTicketValidator();
-	CreateTicketDAO createTicketdao = new CreateTicketDAO();
+	CreateTicketDAO createTicketDAO = new CreateTicketDAO();
 
 	public void registration(String name, String emailId, String password) throws ServiceException {
 
 		try {
 			createTicketValidator.registration(name, emailId, password);
-			createTicketdao.registration(name, emailId, password);
+			createTicketDAO.registration(name, emailId, password);
 		} catch (ValidatorException | PersistanceException e) {
 			throw new ServiceException("Registration Failed", e);
 		}
@@ -29,7 +32,7 @@ public class TicketService {
 
 		try {
 			createTicketValidator.createTicket(emailId, password, subject, description, department, priority);
-			createTicketdao.createTicket(emailId, password, subject, description, department, priority);
+			createTicketDAO.createTicket(emailId, password, subject, description, department, priority);
 		} catch (ValidatorException | PersistanceException e) {
 			throw new ServiceException("Cannot Create Ticket", e);
 
@@ -63,7 +66,7 @@ public class TicketService {
 
 		try {
 			createTicketValidator.updateTicket(emailId, password, issueId, updateDescription);
-			createTicketdao.updateTicket(emailId, password, issueId, updateDescription);
+			createTicketDAO.updateTicket(emailId, password, issueId, updateDescription);
 		} catch (ValidatorException | PersistanceException e) {
 			throw new ServiceException("Cannot Update Ticket", e);
 
@@ -74,32 +77,16 @@ public class TicketService {
 
 		try {
 			createTicketValidator.updateClose(emailId, password, issueId);
-			createTicketdao.updateClose(emailId, password, issueId);
+			createTicketDAO.updateClose(emailId, password, issueId);
 		} catch (ValidatorException | PersistanceException e) {
 			throw new ServiceException("Cannot Close Ticket", e);
 
 		}
 	}
 
-	// public List<TicketIssue> findUserDetails(TicketIssue ticketIssue) throws
-	// ServiceException{
-	// try {
-	// return createTicketdao.findUserDetails(ticketIssue);
-	// } catch (PersistanceException e) {
-	// throw new ServiceException("Cannot View Ticket", e);
-	// }
-	// }
-	//
-	//
+	
 
-	public void findUserDetails(String emailId, String password) throws ServiceException {
-		try {
-			createTicketValidator.findUserDetails(emailId, password);
-			createTicketdao.findUserDetails(emailId, password);
-		} catch (ValidatorException | PersistanceException e) {
-			throw new ServiceException("Cannot View Ticket", e);
-		}
-	}
+	
 
 	public void assignEmp(String emailId, String password, int issueId, int employeeId) throws ServiceException {
 
@@ -112,16 +99,12 @@ public class TicketService {
 		}
 	}
 
-	public void findEmployeeTickets(String emailId, String password) throws ServiceException {
-
+	public List<TicketIssue> findEmployeeTickets(String emailId, String password) throws ServiceException {
 		try {
-			createTicketValidator.findEmployeeTickets(emailId, password);
-			assignEmployeeDAO.findEmployeeTickets(emailId, password);
-		} catch (ValidatorException | PersistanceException e) {
-			throw new ServiceException("Cannot View Tickets", e);
-
+			return assignEmployeeDAO.findEmployeeTickets(emailId, password);
+		} catch (PersistanceException e) {
+			throw new ServiceException("Cannot View Ticket", e);
 		}
-
 	}
 
 	public void deleteTickets(String emailId, String password, int issueId) throws ServiceException {
@@ -136,14 +119,23 @@ public class TicketService {
 
 	}
 
-	public void findUserDetail(String emailId, String password) throws ServiceException, ValidatorException {
-		// TODO Auto-generated method stub
-		createTicketValidator.findUserDetails(emailId, password);
+	public List<TicketIssue> findUserDetails(TicketIssue issue) throws ServiceException {
 		try {
-			createTicketdao.findUserDetails(emailId, password);
+			return createTicketDAO.findUserTicket(issue);
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServiceException("Cannot View Ticket", e);
+		}
+	}
+
+	public void assignEmployee(String emailId, String password, int ticketId, int employeeId) throws ServiceException {
+
+		try {
+			createTicketValidator.assignEmployee(emailId, password, ticketId, employeeId);
+			assignEmployeeDAO.assignEmployee(emailId, password, ticketId, employeeId);
+
+		} catch (ValidatorException | PersistanceException e) {
+			throw new ServiceException("Cannot Assign Ticket", e);
+
 		}
 	}
 
